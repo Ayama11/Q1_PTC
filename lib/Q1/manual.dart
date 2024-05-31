@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class Company {
+class Company with UtcConverter {
   int? isActive;
   String? name;
   Address? address;
@@ -135,15 +135,30 @@ class Availability {
 
 // utc
 
-void convertToUtc(Map<String, dynamic> data) {
-  data['company']['established'] = DateFormat("yyyy-MM-ddTHH:mm:ss'Z'")
-      .format(DateTime.parse(data['company']['established']).toUtc());
+// void convertToUtc(Map<String, dynamic> data) {
+//   data['company']['established'] = DateFormat("yyyy-MM-ddTHH:mm:ss'Z'")
+//       .format(DateTime.parse(data['company']['established']).toUtc());
 
-  for (var department in data['company']['departments']) {
-    if (department.containsKey('meeting_time')) {
-      department['meeting_time'] = DateFormat("HH:mm")
-          .format(DateFormat("h:mm a").parse(department['meeting_time']))
-          .toString();
+//   for (var department in data['company']['departments']) {
+//     if (department.containsKey('meeting_time')) {
+//       department['meeting_time'] = DateFormat("HH:mm")
+//           .format(DateFormat("h:mm a").parse(department['meeting_time']))
+//           .toString();
+//     }
+//   }
+// }
+
+mixin UtcConverter {
+  void convertToUtc(Map<String, dynamic> data) {
+    data['company']['established'] = DateFormat("yyyy-MM-ddTHH:mm:ss'Z'")
+        .format(DateTime.parse(data['company']['established']).toUtc());
+
+    for (var department in data['company']['departments']) {
+      if (department.containsKey('meeting_time')) {
+        department['meeting_time'] = DateFormat("HH:mm")
+            .format(DateFormat("h:mm a").parse(department['meeting_time']))
+            .toString();
+      }
     }
   }
 }
