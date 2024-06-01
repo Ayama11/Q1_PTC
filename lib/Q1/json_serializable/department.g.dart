@@ -7,15 +7,15 @@ part of 'department.dart';
 // **************************************************************************
 
 Department _$DepartmentFromJson(Map<String, dynamic> json) => Department(
-      deptId: json['deptId'] as String,
-      name: json['name'] as String,
-      manager: json['manager'] as String,
-      budget: (json['budget'] as num).toDouble(),
+      deptId: json['deptId'] as String?,
+      name: json['name'] as String?,
+      manager: json['manager'] as String?,
+      budget: (json['budget'] as num?)?.toDouble(),
       year: (json['year'] as num?)?.toInt(),
       availability: (json['availability'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as bool),
       ),
-      meetingTime: json['meetingTime'] as String,
+      meetingTime: json['meetingTime'] as String?,
     );
 
 Map<String, dynamic> _$DepartmentToJson(Department instance) =>

@@ -22,6 +22,6 @@ Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
       'name': instance.name,
       'is_active': instance.isActive,
       'address': instance.address,
-      'established': instance.established.toIso8601String(),
+      'established': instance.established?.toIso8601String(),
       'departments': instance.departments,
     };

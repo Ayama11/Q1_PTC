@@ -4,13 +4,13 @@ part 'department.g.dart';
 
 @JsonSerializable()
 class Department {
-  String deptId;
-  String name;
-  String manager;
-  double budget;
+  String? deptId;
+  String? name;
+  String? manager;
+  double? budget;
   int? year;
   Map<String, bool>? availability;
-  String meetingTime;
+  String? meetingTime;
 
   Department({
     required this.deptId,

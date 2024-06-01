@@ -6,11 +6,11 @@ part 'company.g.dart';
 
 @JsonSerializable()
 class Company {
-  String name;
+  String? name;
   @JsonKey(name: 'is_active', defaultValue: false)
-  int isActive;
+  int? isActive;
   Address? address;
-  DateTime established;
+  DateTime? established;
   List<Department>? departments;
 
   Company({
