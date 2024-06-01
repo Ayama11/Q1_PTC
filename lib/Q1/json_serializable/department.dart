@@ -8,7 +8,7 @@ class Department {
   String name;
   String manager;
   double budget;
-  int year;
+  int? year;
   Map<String, bool>? availability;
   String meetingTime;
 

@@ -11,7 +11,7 @@ Department _$DepartmentFromJson(Map<String, dynamic> json) => Department(
       name: json['name'] as String,
       manager: json['manager'] as String,
       budget: (json['budget'] as num).toDouble(),
-      year: (json['year'] as num).toInt(),
+      year: (json['year'] as num?)?.toInt(),
       availability: (json['availability'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as bool),
       ),

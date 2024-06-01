@@ -1,136 +1,99 @@
 import 'package:intl/intl.dart';
 
-class Company with UtcConverter {
-  int? isActive;
-  String? name;
-  Address? address;
-  DateTime? established;
-  Availability? availability;
-  List<Department>? departments;
+mixin DateHelper {
+  String formatDate(DateTime date) {
+    return DateFormat('d-MMM, yyyy').format(date);
+  }
+}
 
-  Company(
-      {this.isActive,
-      required this.name,
-      required this.address,
-      required this.established,
-      this.departments});
+class CompanyModel with DateHelper {
+  final bool isActive;
+  final String name;
+  final Map<String, dynamic>? address;
+  final DateTime established;
+  final List<Department> departments;
 
-  factory Company.fromJson(Map<String, dynamic> json) {
-    return Company(
-      //  isActive: json['is_active'] ?? json['isActive'] == 1,
-      isActive: (json['is_active'])?.toInt() ?? false,
-      name: json["name"],
-      address: json["address"],
-      established: json["established"],
-      departments: (json['departments'] as List)
-          .map((deptJson) => Department.fromJson(deptJson))
+  CompanyModel({
+    required this.isActive,
+    required this.name,
+    this.address,
+    required this.established,
+    required this.departments,
+  });
+
+  factory CompanyModel.fromJson(Map<String, dynamic> json) {
+    return CompanyModel(
+      isActive: json['company']['is_active'] == 1,
+      name: json['company']['name'],
+      address: json['company']['address'],
+      established: DateTime.parse(json['company']['established']),
+      departments: (json['company']['departments'] as List)
+          .map((dept) => Department.fromJson(dept))
           .toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'is_active': isActive != null ? 1 : 0,
-      //'is_active': instance.isActive,
-      'name': name,
-      'address': address?.toJson(),
-      'established': established!.toIso8601String(),
-      'departments': departments!.map((dept) => dept.toJson()).toList(),
+      'company': {
+        'is_active': isActive ? 1 : 0,
+        'name': name,
+        'address': address,
+        'established': formatDate(established),
+        'departments': departments.map((dept) => dept.toJson()).toList(),
+      },
     };
   }
-}
 
-class Address {
-  String? street;
-  String? city;
-  String? state;
-  String? postalCode;
-
-  Address({
-    this.street,
-    this.city,
-    this.state,
-    this.postalCode,
-  });
-
-  factory Address.fromJson(Map<String, dynamic> json) {
-    return Address(
-      street: json["street"],
-      city: json["city"],
-      state: json["state"],
-      postalCode: json["postalCode"],
-    );
+  String getFormattedEstablishedDate() {
+    return formatDate(established);
   }
-
-  Map<String, dynamic> toJson() => {
-        'street': street,
-        'city': city,
-        'state': state,
-        'postalCode': postalCode,
-      };
 }
 
 class Department {
-  String? deptId;
-  String? name;
-  String? manager;
-  double? budget;
-  int? year;
-  Map<String, dynamic>? availability;
-  String? meetingTime;
+  final String deptId;
+  final String name;
+  final String manager;
+  final double budget;
+  final int? year;
+  final Map<String, bool>? availability;
+  final String? meetingTime;
 
   Department({
-    this.deptId,
-    this.name,
-    this.manager,
-    this.budget,
-    this.year,
+    required this.deptId,
+    required this.name,
+    required this.manager,
+    required this.budget,
+    required this.year,
     this.availability,
     this.meetingTime,
   });
 
   factory Department.fromJson(Map<String, dynamic> json) {
     return Department(
-        deptId: json["deptId"],
-        name: json["name"],
-        manager: json["manager"],
-        budget: json["budget"],
-        year: json["year"],
-        availability: json["availability"],
-        meetingTime: json["meetingTime"]);
-  }
-
-  Map<String, dynamic> toJson() => {
-        'deptId': deptId,
-        'name': name,
-        'manager': manager,
-        'budget': budget,
-        'year': year,
-        'availability': availability,
-        'meetingTime': meetingTime,
-      };
-}
-
-class Availability {
-  bool? online;
-  bool? inStore;
-
-  Availability({
-    this.online,
-    this.inStore,
-  });
-
-  factory Availability.fromJson(Map<String, bool> json) {
-    return Availability(
-      online: json['online'],
-      inStore: json['inStore'],
+      deptId: json['deptId'],
+      name: json['name'],
+      manager: json['manager'],
+      budget: json['budget'],
+      year: json['year'],
+      availability: json['availability'] != null
+          ? Map<String, bool>.from(json['availability'])
+          : null,
+      meetingTime: json['meeting_time'],
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'online': online,
-        'inStore': inStore,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'deptId': deptId,
+      'name': name,
+      'manager': manager,
+      'budget': budget,
+      'year': year,
+      'availability': availability,
+      'meeting_time': meetingTime,
+    };
+  }
 }
 
 // utc
@@ -148,6 +111,7 @@ class Availability {
 //   }
 // }
 
+//***** */
 mixin UtcConverter {
   void convertToUtc(Map<String, dynamic> data) {
     data['company']['established'] = DateFormat("yyyy-MM-ddTHH:mm:ss'Z'")
