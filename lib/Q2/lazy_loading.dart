@@ -1,4 +1,5 @@
 import 'package:darttest/Q2/pages.dart';
+import 'package:darttest/Q2/languages.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -44,9 +45,9 @@ class HomePage extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      // LanguagesPage(),
-                      const VenuesPage()),
+                builder: (context) => const LanguagesPage(),
+                // const VenuesPage()
+              ),
             ),
           ),
         ],

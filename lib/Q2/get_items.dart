@@ -21,55 +21,8 @@ getVenues() {
 
 getLanguages() async {
   List<String> items;
-  var filePath = [
-    "Afrikaans",
-    "Albanian",
-    "Amharic",
-    "Arabic",
-    "Armenian",
-    "Azerbaijani",
-    "Basque",
-    "Belarusian",
-    "Bengali",
-    "Bosnian",
-    "Bulgarian",
-    "Catalan",
-    "Cebuano",
-    "Chichewa",
-    "Chinese (Simplified)",
-    "Chinese (Traditional)",
-    "Corsican",
-    "Croatian",
-    "Czech",
-    "Danish",
-    "Dutch",
-    "English",
-    "Esperanto",
-    "Estonian",
-    "Filipino",
-    "Finnish",
-    "French",
-    "Frisian",
-    "Galician",
-    "Georgian",
-    "German",
-    "Greek",
-    "Gujarati",
-    "Haitian Creole",
-    "Hausa",
-    "Hawaiian",
-    "Hebrew",
-    "Hindi",
-    "Hmong",
-    "Hungarian",
-    "Icelandic",
-    "Igbo",
-    "Indonesian",
-    "Irish",
-    "Italian",
-    "Japanese"
-  ];
-  var jsonString = await rootBundle.loadString(filePath as String);
+  String filePath = "assets/lottie/languages.json";
+  String jsonString = await rootBundle.loadString(filePath);
   items = await json.decode(jsonString);
   return items;
 }

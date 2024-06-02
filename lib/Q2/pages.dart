@@ -1,6 +1,5 @@
 import 'package:darttest/Q2/get_items.dart';
 import 'package:flutter/material.dart';
-// Import your data functions here
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
@@ -70,7 +69,8 @@ class VenuesPage extends StatelessWidget {
 //     return Scaffold(
 //       appBar: AppBar(title: const Text('Languages')),
 //       body: FutureBuilder(
-//         future: getLanguages(),
+//         //   future: getLanguages(),
+//         future: Future.delayed(const Duration(seconds: 1), getLanguages()),
 //         builder: (context, snapshot) {
 //           if (snapshot.connectionState == ConnectionState.waiting) {
 //             return const Center(child: CircularProgressIndicator());
